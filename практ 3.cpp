@@ -1,5 +1,7 @@
-﻿#include <iostream>
-#include <cmath> // для функции pow и константы M_PI
+#include <iostream>     // Для cout, cin и endl
+#include <cmath>        // Для pow и константы M_PI
+#include <limits>       // Для numeric_limits
+
 using namespace std;
 
 // Задача 1: Проверка числа и его преобразование
@@ -13,12 +15,10 @@ void task_if1() {
         if (num > 0) {
             num = -num;
             cout << "После преобразования: " << num << endl;
-        }
-        else {
+        } else {
             cout << "Число не положительное!" << endl;
         }
-    }
-    else {
+    } else {
         cout << "Ошибка: введено не целое число!" << endl;
         cin.clear(); // Очистка потока ввода
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Пропуск оставшихся символов
@@ -29,12 +29,11 @@ void task_if1() {
 void task_geom() {
     float x, y, a, b;
     cout << "********** Задача 2 **********" << endl;
-    cout << "Введите координаты центра окружности (a, b) и радиус: ";
+    cout << "Введите координаты центра окружности (a, b): ";
     cin >> a >> b;
 
-    // Проверка корректности введённых данных для координат центра и радиуса
-    if (!cin || a <= 0 || b <= 0) {
-        cout << "Ошибка: параметры должны быть положительными и ненулевыми!" << endl;
+    if (!cin) {
+        cout << "Ошибка: координаты центра окружности должны быть числами!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return;
@@ -55,7 +54,7 @@ void task_geom() {
     cin >> x >> y;
 
     if (!cin) {
-        cout << "Ошибка: координаты должны быть числами!" << endl;
+        cout << "Ошибка: координаты точки должны быть числами!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return;
@@ -65,8 +64,7 @@ void task_geom() {
     float dist = pow(x - a, 2) + pow(y - b, 2); // Квадрат расстояния до центра
     if (dist <= pow(radius, 2)) {
         cout << "Точка находится внутри окружности!" << endl;
-    }
-    else {
+    } else {
         cout << "Точка находится вне окружности!" << endl;
     }
 }
