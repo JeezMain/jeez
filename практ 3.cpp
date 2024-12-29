@@ -1,112 +1,138 @@
-#include <iostream>     // Для cout, cin и endl
-#include <cmath>        // Для pow и константы M_PI
-#include <limits>       // Для numeric_limits
+#include <iostream>     // Для введення/виведення
+#include <cmath>        // Для математичних обчислень
+#include <limits>       // Для очищення буфера введення
 
 using namespace std;
 
-// If 10 : Проверка числа и его преобразование
-void task_if1() {
-    int num;
-    cout << "********** If 10 **********" << endl;
-    cout << "Введите целое число: ";
-    cin >> num;
+// Завдання 1: Робота з двома цілими числами
+void task_if10() {
+    int A, B; // Змінні для введення
+    cout << "********** Завдання 1: If_10 **********" << endl;
+    cout << "Введіть два цілих числа A і B: ";
+    cin >> A >> B;
 
-    if (cin) { // Проверка на корректность ввода
-        if (num > 0) {
-            num = -num;
-            cout << "После преобразования: " << num << endl;
-        } else {
-            cout << "Число не положительное!" << endl;
-        }
-    } else {
-        cout << "Ошибка: введено не целое число!" << endl;
-        cin.clear(); // Очистка потока ввода
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Пропуск оставшихся символов
+    // Перевірка коректності введення
+    if (!cin) {
+        cout << "Помилка: введіть цілі числа!" << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
     }
+
+    // Логіка перевірки умов
+    if (A != B) { // Якщо числа не рівні
+        A = A + B;
+        B = A;
+    } else { // Якщо рівні
+        A = 0;
+        B = 0;
+    }
+
+    // Виведення результатів
+    cout << "Нові значення: A = " << A << ", B = " << B << endl;
 }
 
-// Геом обл 5 : Проверка попадания точки в окружность
-void task_geom() {
-    float x, y, a, b;
-    cout << "********** Геом обл 5 **********" << endl;
-    cout << "Введите координаты центра окружности (a, b): ";
-    cin >> a >> b;
+// Завдання 2: Перевірка попадання точки в кільце
+void task_geom5() {
+    float r1, r2, a, x, y; // Радіуси, координати, відстань
+    cout << "********** Завдання 2: Geom_5 **********" << endl;
 
-    if (!cin) {
-        cout << "Ошибка: координаты центра окружности должны быть числами!" << endl;
+    // Введення параметрів для кільця
+    cout << "Введіть радіус внутрішнього кола r1: ";
+    cin >> r1;
+    cout << "Введіть радіус зовнішнього кола r2: ";
+    cin >> r2;
+    cout << "Введіть відстань від центру a: ";
+    cin >> a;
+
+    // Перевірка коректності введених даних
+    if (!cin || r1 <= 0 || r2 <= 0 || r1 > r2 || a < 0) {
+        cout << "Помилка: некоректні дані!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return;
     }
 
-    float radius;
-    cout << "Введите радиус окружности: ";
-    cin >> radius;
-
-    if (!cin || radius <= 0) {
-        cout << "Ошибка: радиус должен быть положительным числом!" << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        return;
-    }
-
-    cout << "Введите координаты точки (x, y): ";
+    // Введення координат точки
+    cout << "Введіть координати точки (x, y): ";
     cin >> x >> y;
 
     if (!cin) {
-        cout << "Ошибка: координаты точки должны быть числами!" << endl;
+        cout << "Помилка: координати повинні бути числами!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return;
     }
 
-    // Проверка, находится ли точка в пределах окружности радиуса radius вокруг центра (a, b)
-    float dist = pow(x - a, 2) + pow(y - b, 2); // Квадрат расстояния до центра
-    if (dist <= pow(radius, 2)) {
-        cout << "Точка находится внутри окружности!" << endl;
+    // Обчислення відстані до центра кола
+    float dist = sqrt(pow(x - a, 2) + pow(y - a, 2));
+
+    // Перевірка попадання точки в область кільця
+    if (dist >= r1 && dist <= r2) {
+        cout << "Точка знаходиться в області кільця!" << endl;
     } else {
-        cout << "Точка находится вне окружности!" << endl;
+        cout << "Точка знаходиться поза кільцем!" << endl;
     }
+
+    // Обчислення площі кільця
+    float area_inner = M_PI * r1 * r1; // Площа внутрішнього кола
+    float area_outer = M_PI * r2 * r2; // Площа зовнішнього кола
+    float total_area = area_outer - area_inner; // Площа кільця
+
+    cout << "Площа зовнішнього кола: " << area_outer << endl;
+    cout << "Площа внутрішнього кола: " << area_inner << endl;
+    cout << "Загальна площа кільця: " << total_area << endl;
 }
 
-// Задача 3: Вычисление площади и периметра круга
+// Завдання 3: Площі і периметри двох кіл
 void task_area_perimeter() {
-    float radius;
-    cout << "********** Задача 3 **********" << endl;
-    cout << "Введите радиус круга: ";
-    cin >> radius;
+    float r1, r2; // Радіуси двох кіл
+    cout << "********** Завдання 3 **********" << endl;
 
-    if (!cin || radius <= 0) {
-        cout << "Ошибка: радиус должен быть положительным числом!" << endl;
+    // Введення радіусів
+    cout << "Введіть радіуси двох кіл r1 і r2: ";
+    cin >> r1 >> r2;
+
+    // Перевірка коректності даних
+    if (!cin || r1 <= 0 || r2 <= 0) {
+        cout << "Помилка: радіуси повинні бути додатними числами!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return;
     }
 
-    float area = M_PI * radius * radius; // Площадь круга
-    float perimeter = 2 * M_PI * radius; // Периметр круга
+    // Обчислення площі і периметру для першого кола
+    float area1 = M_PI * r1 * r1;
+    float perimeter1 = 2 * M_PI * r1;
 
-    cout << "Площадь круга: " << area << endl;
-    cout << "Периметр круга: " << perimeter << endl;
+    // Обчислення площі і периметру для другого кола
+    float area2 = M_PI * r2 * r2;
+    float perimeter2 = 2 * M_PI * r2;
+
+    // Виведення результатів
+    cout << "Для першого кола: Площа = " << area1 << ", Периметр = " << perimeter1 << endl;
+    cout << "Для другого кола: Площа = " << area2 << ", Периметр = " << perimeter2 << endl;
 }
 
+// Головна функція з меню вибору
 int main() {
-    int menu;
-    cout << "Введите номер задачи (1, 2 или 3): ";
+    int menu; // Номер завдання
+    cout << "Виберіть номер завдання (1, 2, 3): ";
     cin >> menu;
 
+    // Перехід між завданнями за номером
     switch (menu) {
     case 1:
-        task_if1();
+        task_if10();  // Завдання 1
         break;
     case 2:
-        task_geom();
+        task_geom5(); // Завдання 2
         break;
     case 3:
-        task_area_perimeter();
+        task_area_perimeter(); // Завдання 3
         break;
     default:
-        cout << "Неверный номер задачи! Введите 1, 2 или 3." << endl;
+        cout << "Невірний номер завдання! Введіть 1, 2 або 3." << endl;
         break;
     }
 
